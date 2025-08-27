@@ -1,157 +1,169 @@
 <% layout("/layouts/boilerplate") %>
 
-<body class="bg-light">
-  <div class="container py-5">
-    <div class="col-lg-8 mx-auto">
-      <!-- Card Wrapper -->
-      <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
-        <div class="card-body p-5 bg-white/70 backdrop-blur-md">
-
-          <!-- Title -->
-          <h3 class="fs-2 fw-bold text-center mb-4 text-primary">Edit Listing</h3>
-          <p class="text-muted text-center mb-5">Update your property details</p>
-
-          <!-- Form -->
-          <form method="POST" action="/listings/<%= listing.id %>?_method=PUT" enctype="multipart/form-data"
-            class="needs-validation" novalidate>
+  <body class="bg-light">
+    <div class="container py-5">
+      <div class="col-lg-8 mx-auto">
+        <!-- Card Wrapper -->
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+          <div class="card-body p-5 bg-white/70 backdrop-blur-md">
 
             <!-- Title -->
-            <div class="mb-4">
-              <label class="form-label fw-semibold">Title</label>
-              <input type="text" name="listing[title]" value="<%= listing.title %>"
-                     class="form-control form-control-lg rounded-3" required>
-            </div>
+            <h3 class="fs-2 fw-bold text-center mb-4 text-primary">Edit Listing</h3>
+            <p class="text-muted text-center mb-5">Update your property details</p>
 
-            <!-- Description -->
-            <div class="mb-4">
-              <label class="form-label fw-semibold">Description</label>
-              <textarea name="listing[description]" rows="4"
-                        class="form-control rounded-3" required><%= listing.description %></textarea>
-            </div>
+            <!-- Form -->
+            <form method="POST" action="/listings/<%= listing.id %>?_method=PUT" enctype="multipart/form-data"
+              class="needs-validation" novalidate>
 
-            <!-- Existing Images -->
-            <div class="mb-4">
-              <label class="form-label fw-semibold">Current Images</label>
-              <div class="flex flex-wrap gap-3">
-                <% if (originalImages && originalImages.length > 0) { %>
-                  <% originalImages.forEach((img, index)=> { %>
-                    <div class="col-2 mb-3">
-                      <img src="<%= img.url %>" class="img-fluid rounded h-24 w-28 shadow-sm" />
-                    </div>
-                  <% }) %>
-                <% } else { %>
-                  <p class="text-muted">No images available.</p>
-                <% } %>
+              <!-- Title -->
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Title</label>
+                <input type="text" name="listing[title]" value="<%= listing.title %>"
+                  class="form-control form-control-lg rounded-3" required>
               </div>
-            </div>
 
-            <!-- Upload New Images -->
-            <div class="mb-4">
-              <label class="form-label fw-semibold">Upload Additional Images</label>
-              <input type="file" name="listing[image]" multiple class="form-control">
-            </div>
+              <!-- Description -->
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Description</label>
+                <textarea name="listing[description]" rows="4" class="form-control rounded-3"
+                  required><%= listing.description %></textarea>
+              </div>
 
-            <!-- Price & Country -->
-            <div class="row g-3 mb-4">
-              <div class="col-md-4">
-                <label class="form-label fw-semibold">Price</label>
-                <div class="input-group">
-                  <span class="input-group-text">₹</span>
-                  <input type="text" name="listing[price]" value="<%= listing.price %>" class="form-control" required>
+              <!-- Existing Images -->
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Current Images</label>
+                <div class="flex flex-wrap gap-3">
+                  <% if (originalImages && originalImages.length> 0) { %>
+                    <% originalImages.forEach((img, index)=> { %>
+                      <div class="col-2 mb-3">
+                        <img src="<%= img.url %>" class="img-fluid rounded h-24 w-28 shadow-sm" />
+                      </div>
+                      <% }) %>
+                        <% } else { %>
+                          <p class="text-muted">No images available.</p>
+                          <% } %>
                 </div>
               </div>
-              <div class="col-md-8">
-                <label class="form-label fw-semibold">Country</label>
-                <input type="text" name="listing[country]" value="<%= listing.country %>"
-                       class="form-control" required>
+
+              <!-- Upload New Images -->
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Upload Additional Images</label>
+                <input type="file" name="listing[image]" multiple class="form-control">
               </div>
-            </div>
 
-            <!-- Location -->
-            <div class="mb-4">
-              <label class="form-label fw-semibold">Location</label>
-              <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control" required>
-            </div>
-
-            <!-- Property Type -->
-            <div class="mb-5">
-              <h5 class="fw-bold mb-3">Property Type</h5>
-              <div class="row g-3">
-                <% const propertyTypes = ["House","Boat","Cabin","Castle"]; %>
-                <% propertyTypes.forEach(type => { %>
-                  <div class="col-6 col-md-3">
-                    <label class="d-flex align-items-center gap-2 border rounded-3 p-3 bg-light w-100">
-                      <input type="checkbox" name="listing[property_types][]" value="<%= type %>"
-                        class="form-check-input"
-                        <%= listing.property_types && listing.property_types.includes(type) ? "checked" : "" %>>
-                      <i data-lucide="<%= type.toLowerCase() %>"></i> <%= type %>
-                    </label>
+              <!-- Price & Country -->
+              <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                  <label class="form-label fw-semibold">Price</label>
+                  <div class="input-group">
+                    <span class="input-group-text">₹</span>
+                    <input type="text" name="listing[price]" value="<%= listing.price %>" class="form-control" required>
                   </div>
-                <% }) %>
-              </div>
-            </div>
-
-            <!-- Basics -->
-            <div class="mb-5">
-              <h5 class="fw-bold mb-3">Share Some Basics</h5>
-              <% const basics = ["guests","bedrooms","beds","bathrooms"]; %>
-              <% basics.forEach(field => { %>
-              <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
-                <label class="mb-0 text-capitalize fw-semibold"><%= field %></label>
-                <div class="d-flex align-items-center gap-2">
-                  <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle"
-                          onclick="updateCount('<%= field %>', -1)">−</button>
-                  <input type="text" name="listing[<%= field %>]" id="<%= field %>" 
-                         value="<%= listing[field] || 1 %>"
-                         class="form-control text-center fw-bold" style="width: 60px;" readonly>
-                  <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle"
-                          onclick="updateCount('<%= field %>', 1)">+</button>
+                </div>
+                <div class="col-md-8">
+                  <label class="form-label fw-semibold">Country</label>
+                  <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control"
+                    required>
                 </div>
               </div>
-              <% }) %>
-            </div>
 
-            <!-- Amenities -->
-            <div class="mb-5">
-              <h5 class="fw-bold mb-3">Amenities</h5>
-              <p class="text-muted small">Select what your place offers</p>
-              <div class="row g-3">
-                <% const amenities=[ "Wifi","TV","Kitchen","Washing machine","Free parking on premises","Air conditioning" ]; %>
-                <% amenities.forEach(name => { %>
-                  <div class="col-6 col-md-4">
-                    <label class="d-flex align-items-center gap-2 border rounded-3 p-3 bg-light w-100">
-                      <input type="checkbox" name="listing[amenities][]" value="<%= name %>"
+              <!-- Location -->
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Location</label>
+                <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control"
+                  required>
+              </div>
+
+              <!-- Property Type -->
+              <div class="mb-5">
+                <h5 class="fw-bold mb-3">Property Type</h5>
+                <div class="row g-3">
+                  <% const propertyTypes=["House","Boat","Cabin","Castle"]; %>
+                    <% propertyTypes.forEach(type=> { %>
+                      <div class="col-6 col-md-3">
+                        <label class="d-flex align-items-center gap-2 border rounded-3 p-3 bg-light w-100">
+                          <input type="checkbox" name="listing[property_types][]" value="<%= type %>"
+                            class="form-check-input" <%=listing.property_types && listing.property_types.includes(type)
+                            ? "checked" : "" %>>
+                          <i data-lucide="<%= type.toLowerCase() %>"></i>
+                          <%= type %>
+                        </label>
+                      </div>
+                      <% }) %>
+                </div>
+              </div>
+
+              <!-- Basics -->
+              <div class="mb-5">
+                <h5 class="fw-bold mb-3">Share Some Basics</h5>
+                <% const basics=["guests","bedrooms","beds","bathrooms"]; %>
+                  <% basics.forEach(field=> { %>
+                    <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
+                      <label class="mb-0 text-capitalize fw-semibold">
+                        <%= field %>
+                      </label>
+                      <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle"
+                          onclick="updateCount('<%= field %>', -1)">−</button>
+                        <input type="text" name="listing[<%= field %>]" id="<%= field %>"
+                          value="<%= listing[field] || 1 %>" class="form-control text-center fw-bold"
+                          style="width: 60px;" readonly>
+                        <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle"
+                          onclick="updateCount('<%= field %>', 1)">+</button>
+                      </div>
+                    </div>
+                    <% }) %>
+              </div>
+
+              <!-- Amenities -->
+              <div class="mb-5">
+                <h5 class="fw-bold mb-3">Amenities</h5>
+                <p class="text-muted small">Select what your place offers</p>
+                <div class="row g-3">
+                  <% const guestFaves=[ { name: 'Wifi' , icon: 'wifi' }, { name: 'TV' , icon: 'tv' }, { name: 'Kitchen'
+                    , icon: 'fridge' }, { name: 'Washing machine' , icon: 'smartphone' }, {
+                    name: 'Free parking on premises' , icon: 'car' }, { name: 'Air conditioning' , icon: 'fan' } ]; %>
+
+                    <% guestFaves.forEach(({ name, icon })=> { %>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label
+                          class="d-flex align-items-center gap-2 border rounded-3 p-3 bg-light hover-shadow-sm w-100 h-100">
+                          <input type="checkbox" name="listing[amenities][]" value="<%= name %>"
                         class="form-check-input"
                         <%= listing.amenities && listing.amenities.includes(name) ? "checked" : "" %>>
-                      <i data-lucide="check-circle"></i> <%= name %>
-                    </label>
-                  </div>
-                <% }) %>
+                          <i data-lucide="<%= icon %>"></i>
+                          <span>
+                            <%= name %>
+                          </span>
+                        </label>
+                      </div>
+                      <% }) %>
+                </div>
+
               </div>
-            </div>
 
-            <!-- Submit -->
-            <div class="text-center">
-              <button class="btn btn-primary btn-lg px-5 rounded-3 shadow">
-                Update Listing
-              </button>
-            </div>
-          </form>
+              <!-- Submit -->
+              <div class="text-center">
+                <button class="btn btn-primary btn-lg px-5 rounded-3 shadow">
+                  Update Listing
+                </button>
+              </div>
+            </form>
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    lucide.createIcons();
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
 
-    function updateCount(field, delta) {
-      const input = document.getElementById(field);
-      let value = parseInt(input.value) || 0;
-      value = Math.max(0, value + delta);
-      input.value = value;
-    }
-  </script>
-</body>
+      function updateCount(field, delta) {
+        const input = document.getElementById(field);
+        let value = parseInt(input.value) || 0;
+        value = Math.max(0, value + delta);
+        input.value = value;
+      }
+    </script>
+  </body>

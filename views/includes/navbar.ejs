@@ -1,6 +1,7 @@
 <!-- ✅ Bootstrap Navbar -->
 <header class=" sticky-top z-1000">
-  <nav class="bg-[url(https://static.vecteezy.com/system/resources/previews/039/391/488/non_2x/light-yellow-and-white-watercolor-background-soft-watercolor-background-texture-abstract-background-with-space-vector.jpg)] text-black navbar navbar-expand-lg navbar-light bg-white shadow-sm  h-24">
+  <nav
+    class="bg-[url(https://static.vecteezy.com/system/resources/previews/039/391/488/non_2x/light-yellow-and-white-watercolor-background-soft-watercolor-background-texture-abstract-background-with-space-vector.jpg)] text-black navbar navbar-expand-lg navbar-light bg-white shadow-sm  h-24">
     <div class="container-fluid px-4">
 
       <!-- Logo -->
@@ -21,11 +22,10 @@
         </div>
       </button>
       <!-- Mobile Search Trigger -->
-      <button class="btn d-flex align-items-center w-32 d-lg-none bg-white border rounded-pill shadow-sm px-3 py-2"
+      <button class="btn d-flex align-items-center  d-lg-none   rounded-pill  py-2 "
         data-bs-toggle="modal" data-bs-target="#searchModal">
 
-        <input type="text" class="form-control border-0 bg-transparent shadow-none flex-grow-1 ps-2"
-          placeholder="Search destinations..." readonly />
+        
 
         <span class="btn btn-danger rounded-circle d-flex align-items-center justify-content-center ms-2"
           style="width: 36px; height: 36px;">
@@ -61,7 +61,8 @@
                     </li>
                     <li><a class="dropdown-item" href="/listings/hosting"><i class="fas fa-home me-2"></i> Host your
                         home</a></li>
-                    <li><a class="dropdown-item" href="/listings/68ae7fc248891399d714af7f/payment/order/bookings"><i class="fas fa-briefcase me-2"></i> My Bookings</a>
+                    <li><a class="dropdown-item" href="/listings/68ae7fc248891399d714af7f/payment/order/bookings"><i
+                          class="fas fa-briefcase me-2"></i> My Bookings</a>
                     </li>
                     <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle me-2"></i> Help</a></li>
           </ul>
@@ -238,14 +239,12 @@
   }
 </script>
 <style>
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
-.scrollbar-none {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;     
-}
-
-.scrollbar-none::-webkit-scrollbar {
-  display: none;  
-}
-
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 </style>
