@@ -114,7 +114,7 @@ module.exports.updateListing = async (req, res) => {
 module.exports.deleteListing = async (req, res) => {
     let { id } = req.params;
     let deletelisting = await Listing.findByIdAndDelete(id);
-    console.log(deletelisting)
+   
     req.flash("success", "listing deleted")
     res.redirect("/listings")
 
@@ -149,7 +149,7 @@ module.exports.renderSearchResults = async (req, res) => {
   const guests = parseInt(req.query.guests) || 1;
   const max= parseInt(req.query.maxPrice) || 10000;
   const type=req.query.property_type || "";
-  console.log("Searching for location:", location);
+  
 
   
   let searchResults = [];
@@ -192,11 +192,11 @@ module.exports.createOrder= async (req, res) => {
   };
   try {
     const order = await razorpay.orders.create(options);
-    console.log("Razorpay Order:", order);
+   
     res.json(order);
   } catch (error) {
 
-    console.error("Error creating Razorpay order:", error);
+   
     res.status(500).send("Error creating order");
   }
 }
@@ -207,14 +207,14 @@ module.exports.createOrder= async (req, res) => {
 module.exports.verifyPayment=async (req, res) => {
   
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature, listingId, userId,checkIn,checkOut } = req.body;
-console.log("razorpay_signature",razorpay_order_id);
+
   const body = razorpay_order_id + "|" + razorpay_payment_id;
-  console.log("body",body);
+ 
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
-    console.log("expectedSignature",expectedSignature);
+  
     
 
   if (expectedSignature === razorpay_signature) {
@@ -238,7 +238,7 @@ console.log("razorpay_signature",razorpay_order_id);
 
     return res.json({ success: true, message: "Payment verified and booking saved." });
   } else {
-    return res.status(400).json({ success: false, message: "Payment verification failed" });
+    return res.status(400).json({ success: false, message: "Payment verification failed",booking });
   }
 }
 
@@ -250,6 +250,7 @@ module.exports.getBookings = async (req, res) => {
   const bookings = await Booking.find({ user: userId })
     .populate("listing") // get listing details (title, price, etc.)
     .sort({ createdAt: -1 });
+  
 
-  res.render("booking.ejs", { bookings });
+  res.render("booking.ejs", {bookings} );
 };
