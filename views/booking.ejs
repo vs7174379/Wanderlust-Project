@@ -1,0 +1,93 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  .booking-card {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .booking-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .booking-img {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .badge-status {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 12px;
+  }
+
+  .card-body h5 {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .details p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .btn-view {
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
+
+  .btn-view:hover {
+    background: linear-gradient(135deg, #0056b3, #0096c7);
+    transform: scale(1.05);
+  }
+</style>
+
+<div class="container my-5">
+  <h2 class="mb-4 fw-bold text-center">📖 My Bookings</h2>
+
+  <% if (bookings.length === 0) { %>
+    <div class="alert alert-info text-center p-4 rounded-3 shadow-sm">
+      You don’t have any bookings yet 🚀
+    </div>
+  <% } else { %>
+    <div class="row g-4">
+      <% bookings.forEach(booking => { %>
+        <div class="col-md-4">
+          <div class="card booking-card shadow-sm">
+            <% if (booking.listing.image && booking.listing.image[0]) { %>
+              <img src="<%= booking.listing.image[0].url %>" class="card-img-top booking-img" alt="<%= booking.listing.title %>">
+            <% } %>
+            <div class="card-body">
+              <h5 class="card-title"><%= booking.listing.title %></h5>
+              
+              <div class="details mt-2">
+                <p>💰 Amount Paid: <b>₹<%= booking.amount / 100 %></b></p>
+                <p>Status: 
+                  <span class="badge-status 
+                    <%= booking.status === 'Paid' ? 'bg-success' : 'bg-warning text-dark' %>">
+                    <%= booking.status %>
+                  </span>
+                </p>
+                <p>🧾 Order ID: <%= booking.orderId %></p>
+                <p>💳 Payment ID: <%= booking.paymentId %></p>
+                <p>📅 Date: <%= booking.createdAt.toDateString() %></p>
+              </div>
+
+              <div class="d-grid mt-3">
+                <a href="/listings/<%= booking.listing._id %>" class="btn btn-view text-white fw-semibold">
+                  🔎 View Listing
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>

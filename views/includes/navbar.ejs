@@ -1,0 +1,251 @@
+<!-- ✅ Bootstrap Navbar -->
+<header class=" sticky-top z-1000">
+  <nav class="bg-[url(https://static.vecteezy.com/system/resources/previews/039/391/488/non_2x/light-yellow-and-white-watercolor-background-soft-watercolor-background-texture-abstract-background-with-space-vector.jpg)] text-black navbar navbar-expand-lg navbar-light bg-white shadow-sm  h-24">
+    <div class="container-fluid px-4">
+
+      <!-- Logo -->
+      <a class="navbar-brand d-flex align-items-center text-danger fw-bold" href="/listings">
+        <i class="fa-solid fa-compass me-2 fs-4"></i> WanderLust
+      </a>
+
+      <!-- Search Button -->
+      <button class="d-none d-lg-flex btn border rounded-pill shadow-sm px-3 py-2 d-flex align-items-center h-14"
+        data-bs-toggle="modal" data-bs-target="#searchModal">
+        <small id="countryLabel" class="fw-bold text-muted me-2">Anywhere</small>
+        <small id="durationLabel" class="fw-bold text-muted border-start border-end px-2 me-2">Any week</small>
+        <div class="d-flex align-items-center">
+          <small id="guestLabel" class="text-muted me-2">Add Guests</small>
+          <span class="btn btn-md btn-danger rounded-lg d-flex align-items-center justify-content-center">
+            <i class="fas fa-search text-white small "></i>
+          </span>
+        </div>
+      </button>
+      <!-- Mobile Search Trigger -->
+      <button class="btn d-flex align-items-center w-32 d-lg-none bg-white border rounded-pill shadow-sm px-3 py-2"
+        data-bs-toggle="modal" data-bs-target="#searchModal">
+
+        <input type="text" class="form-control border-0 bg-transparent shadow-none flex-grow-1 ps-2"
+          placeholder="Search destinations..." readonly />
+
+        <span class="btn btn-danger rounded-circle d-flex align-items-center justify-content-center ms-2"
+          style="width: 36px; height: 36px;">
+          <i class="fas fa-search text-white small"></i>
+        </span>
+      </button>
+
+
+
+
+      <!-- Right side -->
+      <div class=" d-flex align-items-center gap-3">
+        <a class="btn btn-dark d-none d-lg-block" href="/listings/hosting">Host your home</a>
+
+
+        <!-- User Dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary d-flex align-items-center rounded-pill px-3 py-2"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bars me-2"></i>
+            <i class="fas fa-user-circle fs-5"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <% if(!currUser){ %>
+              <li><a class="dropdown-item" href="/signup"><i class="fas fa-user me-2"></i> Sign Up</a></li>
+              <li><a class="dropdown-item" href="/login"><i class="fas fa-sign-in-alt me-2"></i> Log In</a></li>
+              <% } %>
+                <% if(currUser){ %>
+                  <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a></li>
+                  <% } %>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/listings/hosting"><i class="fas fa-home me-2"></i> Host your
+                        home</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-briefcase me-2"></i> Host an experience</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle me-2"></i> Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="modal fade" id="searchModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg ">
+    <div class="modal-content border-0 rounded-4 shadow-lg scrollbar-none">
+
+      <!-- Header -->
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold text-dark">
+          <i class="bi bi-funnel-fill text-danger me-2"></i> Search & Filters
+        </h5>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body px-4 py-3">
+        <!-- Country -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="bi bi-geo-alt-fill me-2 text-danger"></i> Destination
+          </label>
+          <input type="text" id="countryInput" placeholder="Where are you going?"
+            class="form-control rounded-3 shadow-sm" />
+        </div>
+
+        <!-- Dates with Flatpickr -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="bi bi-calendar-range me-2 text-danger"></i> Dates
+          </label>
+          <input type="text" id="dateRange" class="form-control rounded-3 shadow-sm" placeholder="Select your dates"
+            readonly />
+        </div>
+
+        <!-- Guests -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="bi bi-people-fill me-2 text-danger"></i> Guests
+          </label>
+          <input type="number" id="guestInput" placeholder="No. of Guests" min="1"
+            class="form-control rounded-3 shadow-sm" />
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Filters Section -->
+        <h6 class="fw-bold mb-3">
+          <i class="bi bi-sliders2-vertical me-2 text-danger"></i> Additional Filters
+        </h6>
+
+        <!-- Price -->
+        <div class="mb-3">
+          <label class="form-label">💰 Max Price (₹)</label>
+          <input type="number" id="priceInput" class="form-control rounded-3 shadow-sm" placeholder="e.g. 5000" />
+        </div>
+
+        <!-- Property Type -->
+        <div class="mb-3">
+          <label class="form-label">🏡 Property Type</label>
+          <select id="typeInput" class="form-select rounded-3 shadow-sm">
+            <option value="">Any</option>
+            <option value="apartment">Apartment</option>
+            <option value="villa">Villa</option>
+            <option value="hotel">Hotel</option>
+            <option value="homestay">Homestay</option>
+          </select>
+        </div>
+
+        <!-- Amenities -->
+        <div class="mb-3">
+          <label class="form-label">✨ Amenities</label>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-check"><input class="form-check-input" type="checkbox" value="wifi"> WiFi</div>
+            </div>
+            <div class="col-6">
+              <div class="form-check"><input class="form-check-input" type="checkbox" value="pool"> Pool</div>
+            </div>
+            <div class="col-6">
+              <div class="form-check"><input class="form-check-input" type="checkbox" value="parking"> Parking</div>
+            </div>
+            <div class="col-6">
+              <div class="form-check"><input class="form-check-input" type="checkbox" value="kitchen"> Kitchen</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ratings -->
+        <div class="mb-3">
+          <label class="form-label">⭐ Minimum Rating</label>
+          <select id="ratingInput" class="form-select rounded-3 shadow-sm">
+            <option value="">Any</option>
+            <option value="4">4★ & above</option>
+            <option value="3">3★ & above</option>
+            <option value="2">2★ & above</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Footer (Apply Button) -->
+      <div class="modal-footer border-0 p-3">
+        <button onclick={applySearch()} class="btn btn-danger w-100 py-2 rounded-3 fw-semibold shadow-sm">
+          <i class="bi bi-search me-2"></i> Apply Filters
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedRange = [];
+
+  // Initialize Flatpickr
+  flatpickr("#dateRange", {
+    mode: "range",
+    dateFormat: "Y-m-d",   // better for backend
+    minDate: "today",
+    disable: [
+      "2025-08-28", "2025-08-30" // <-- replace with booked dates
+    ],
+    onChange: function (dates) {
+      selectedRange = dates; // store start & end
+    }
+  });
+
+  function applySearch() {
+    const country = document.getElementById("countryInput").value;
+    const guest = document.getElementById("guestInput").value;
+    const priceInput = document.getElementById("priceInput");
+    const typeInput = document.getElementById("typeInput");
+
+    // Dates from Flatpickr
+    let start = "";
+    let end = "";
+    if (selectedRange.length === 2) {
+      start = selectedRange[0].toISOString().split("T")[0];
+      end = selectedRange[1].toISOString().split("T")[0];
+    }
+
+    // Update labels
+    document.getElementById("countryLabel").innerText = country || "Anywhere";
+    document.getElementById("guestLabel").innerText = guest ? `${guest} Guests` : "Add Guests";
+
+    if (start && end) {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      let diff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+      if (diff === 0) diff = 1;
+      document.getElementById("durationLabel").innerText = `${diff} Days`;
+    } else {
+      document.getElementById("durationLabel").innerText = "Any week";
+    }
+
+    // Redirect with filters
+    const query = new URLSearchParams({
+      location: country,
+      guests: guest,
+      startDate: start,
+      endDate: end,
+      maxPrice: priceInput.value,
+      property_type: typeInput.value
+    });
+
+    window.location.href = `/listings/find/search?${query.toString()}`;
+  }
+</script>
+<style>
+
+.scrollbar-none {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;  
+}
+
+</style>

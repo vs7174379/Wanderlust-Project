@@ -1,0 +1,40 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-center fw-bold">
+    Search Results for "<span class="text-primary"><%= location %></span>"
+  </h2>
+
+  <% if (searchResults.length > 0) { %>
+    <div class="row g-4">
+      <% searchResults.forEach(listing => { %>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden hover-card">
+            
+            <% if (listing.image && listing.image.length > 0) { %>
+              <img src="<%= listing.image[0].url %>" class="card-img-top" alt="<%= listing.title %>">
+            <% } else { %>
+              <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="No Image Available">
+            <% } %>
+
+            <div class="card-body">
+              <h5 class="card-title fw-bold"><%= listing.title %></h5>
+              <p class="text-muted mb-2"><i class="bi bi-geo-alt-fill text-danger"></i> <%= listing.location %></p>
+              <p class="card-text"><%= listing.description.substring(0, 100) %>...</p>
+              <a href="/listings/<%= listing._id %>" class="btn btn-outline-primary rounded-pill w-100 mt-2">
+                View Details
+              </a>
+            </div>
+
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="text-center mt-5">
+      <h4 class="text-muted">No listings found for "<%= location %>"</h4>
+      <p class="text-muted">Try a different location or browse all listings.</p>
+      <a href="/listings" class="btn btn-primary rounded-pill px-4 mt-3">Browse All Listings</a>
+    </div>
+  <% } %>
+</div>
